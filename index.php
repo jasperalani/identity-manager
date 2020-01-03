@@ -2,28 +2,30 @@
 
 include_once 'php/includes.php';
 
-if(isset($_GET['addnew'])){
+if(isset($_COOKIE['loggedin'])){
 
-	include 'php/addnew.php';
+	if(isset($_GET['addnew'])){
+
+		include 'php/addnew.php';
+
+	}else{
+
+		include 'php/display.php';
+
+	} 
 
 }else{
 
-	$sql = "SELECT * FROM identities";
+	if(isset($_GET['signin'])){
 
-	$array = $conn->query($sql);
-	// var_dump($array);
+		include 'php/signin.php';
 
-	if($array->num_rows >= 1) {
-		while ($identity = $array->fetch_assoc()){
-			$identities[] =
-				new Identity($identity['id'], $identity['name'], $identity['username'], $identity['region'], $identity['birthdate']);
-		}
+	}else{
+
+		include 'php/register.php';
+
 	}
 
-	include 'php/display.php';
-
-} 
+}
 
 include 'html/close.php';
-
-?>

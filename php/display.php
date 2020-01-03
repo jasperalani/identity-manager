@@ -8,11 +8,32 @@ if(isset($_GET['remove'])){
 	header("Location: ?");
 }
 
+if(isset($_GET['logout'])){
+	unset($_COOKIE['loggedin']); 
+	setcookie('loggedin', null, -1, '/'); 
+	sleep(1);
+	header("Location: ?");
+}
+
+$uid = getUID($_COOKIE['loggedin']);
+
+$sql = "SELECT * FROM identities WHERE userid = '$uid'";
+$array = $conn->query($sql);
+
+if($array->num_rows >= 1) {
+	while ($identity = $array->fetch_assoc()){
+		$identities[] =
+		new Identity($identity['id'], $identity['name'], $identity['username'], $identity['region'], $identity['birthdate']);
+	}
+}
+
 ?>
 
 <body>
-	<div id="add-new" onclick="addnew()">
-		+
+	<div id="directional_buttons">
+		<div id="add-new" onclick="addnew()">
+			+
+		</div>
 	</div>
 
 	<div id="body-wrapper">
@@ -47,6 +68,9 @@ if(isset($_GET['remove'])){
 			</div>
 		</div>
 	</div>
+
+	<a href="?logout=yes" id="logout">logout</a>
+
 </body>
 
 <script>
@@ -56,7 +80,7 @@ if(isset($_GET['remove'])){
 			var id = $(this).attr('id');
 			if (window.confirm("Are you sure?")) {
 				window.location = "?remove=" + id;
-        }
+			}
 		});
 	});
 

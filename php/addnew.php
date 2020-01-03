@@ -11,100 +11,104 @@ if(isset($_POST['submit'])){
 	$Name = addslashes($Name);
 	$Region = $regions[$Region];
 
-	$sql = "INSERT INTO `identities`(`name`, `username`, `region`, `birthdate`) 
-	VALUES ('$Name','$Username','$Region','$Birthdate')";
+	$uid = getUID($_COOKIE['loggedin'], $conn);
+
+	$sql = "INSERT INTO `identities`(`name`, `username`, `region`, `birthdate`, `userid`) 
+	VALUES ('$Name','$Username','$Region','$Birthdate','$uid')";
 
 	if ($conn->query($sql) === TRUE) {
 		echo "New record created successfully";
 		sleep(1);
-			header('Location: ?');
-		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
-		}
+		header('Location: ?');
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
+}
 
-	?>
+?>
 
-	<body>
+<body>
+	<div id="directional_buttons">
 		<div id="go-back" onclick="back()">
 			-
 		</div>
+	</div>
 
-		<div id="body-wrapper">
-			<div class="container">
-				<div class="row add-new-form">
-					<form action="" method="POST">
-						<div class="col">
-							<input type="text" name="name" id="name" placeholder="Name">
-							<img src="res/randomicon.png" id="rName">
-						</div><br>
+	<div id="body-wrapper">
+		<div class="container">
+			<div class="row add-new-form">
+				<form action="" method="POST">
+					<div class="col">
+						<input type="text" name="name" id="name" placeholder="Name">
+						<img src="res/randomicon.png" id="rName">
+					</div><br>
 
-						<div class="col"><input type="text" id="username" name="username" placeholder="Username">
-							<img src="res/randomicon.png" id="ruserName">
-						</div><br>
+					<div class="col"><input type="text" id="username" name="username" placeholder="Username">
+						<img src="res/randomicon.png" id="ruserName">
+					</div><br>
 
-						<div class="col"><select id="region" name="region">
-							<?php
-							foreach($regions as $key => $region){
-								echo "<option value=" . $key . ">$region</option>";
-							}
-							?>
-						</select><img src="res/randomicon.png" id="rRegion"></div>
-						<br>
-						<div class="col"><input type="datetime-local" id="birthdate" name="birthdate" placeholder="Birthdate">
-							<img src="res/randomicon.png" id="rbirthdate"></div><br>
-							<input type="submit" name="submit">
+					<div class="col"><select id="region" name="region">
+						<?php
+						foreach($regions as $key => $region){
+							echo "<option value=" . $key . ">$region</option>";
+						}
+						?>
+					</select><img src="res/randomicon.png" id="rRegion"></div>
+					<br>
+					<div class="col"><input type="datetime-local" id="birthdate" name="birthdate" placeholder="Birthdate">
+						<img src="res/randomicon.png" id="rbirthdate"></div><br>
+						<input type="submit" name="submit">
 
-							<img src="res/randomicon.png" id="allR">
-						</form>
-					</div>
+						<img src="res/randomicon.png" id="allR">
+					</form>
 				</div>
 			</div>
-		</body>
+		</div>
+	</body>
 
-		<script>
+	<script>
 
-			$(document).ready(function(){
+		$(document).ready(function(){
 
-				$("#allR").click(function() {
-					$("#name").val(faker.name.findName());
-					$("#username").val(faker.internet.userName());
-					rand = Math.floor(Math.random() * 239);
-					options = $("#region > option");
-					options[rand].selected = true;
-					$("#birthdate").val(faker.date.between(1950, 2019).toISOString().substring(0, 16));
-				});
+			$("#allR").click(function() {
+				$("#name").val(faker.name.findName());
+				$("#username").val(faker.internet.userName());
+				rand = Math.floor(Math.random() * 239);
+				options = $("#region > option");
+				options[rand].selected = true;
+				$("#birthdate").val(faker.date.between(1950, 2019).toISOString().substring(0, 16));
+			});
 
-				$("#rName").click(function(){
-					$("#name").val(faker.name.findName());
+			$("#rName").click(function(){
+				$("#name").val(faker.name.findName());
 
-					});
+			});
 
-					$("#ruserName").click(function(){
-						$("#username").val(faker.internet.userName());
-					});
+			$("#ruserName").click(function(){
+				$("#username").val(faker.internet.userName());
+			});
 
-					$("#rbirthdate").click(function(){
-						$("#birthdate").val(faker.date.between(1950, 2019).toISOString().substring(0, 16));
-					});
+			$("#rbirthdate").click(function(){
+				$("#birthdate").val(faker.date.between(1950, 2019).toISOString().substring(0, 16));
+			});
 
-					$("#rRegion").click(function(){
-						rand = Math.floor(Math.random() * 239);
-						options = $("#region > option");
-						options[rand].selected = true;
+			$("#rRegion").click(function(){
+				rand = Math.floor(Math.random() * 239);
+				options = $("#region > option");
+				options[rand].selected = true;
 
 
-					});
+			});
 
-				});
+		});
 
-						function back() {
-							window.location = "?";
-						}
+		function back() {
+			window.location = "?";
+		}
 
-						function randomDate(start, end) {
-							return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-						}
+		function randomDate(start, end) {
+			return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+		}
 
-						console.log(randomDate(new Date(1947, 0, 1), new Date()));
-					</script>
+		console.log(randomDate(new Date(1947, 0, 1), new Date()));
+	</script>
