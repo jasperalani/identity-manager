@@ -1,0 +1,67 @@
+body {
+  background: #ffd1d1; }
+
+#directional_buttons #add-new, #directional_buttons #go-back {
+  position: absolute;
+  font-size: 4rem;
+  color: white;
+  font-weight: bold; }
+  #directional_buttons #add-new:hover, #directional_buttons #go-back:hover {
+    color: #eda09a;
+    cursor: pointer; }
+
+#directional_buttons #add-new {
+  top: -32px;
+  right: 0; }
+
+#directional_buttons #go-back {
+  top: -42px;
+  right: 10px; }
+
+#register-form, #signup-form {
+  margin: 80px; }
+
+#logout, #signin, #register {
+  color: white; }
+  #logout:hover, #signin:hover, #register:hover {
+    color: #eda09a;
+    cursor: pointer;
+    text-decoration: none; }
+
+#logout {
+  position: absolute;
+  bottom: 3px;
+  left: 5px; }
+
+.row {
+  margin-top: 10px; }
+
+.remove {
+  font-size: 11px; }
+  .remove:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline; }
+
+.container {
+  display: inline-block; }
+
+.add-new-form {
+  margin: 30px;
+  max-width: 150px; }
+
+input {
+  margin: 5px; }
+
+img {
+  width: 16px;
+  cursor: pointer; }
+
+.body-wrapper {
+  width: auto;
+  text-align: center;
+  margin: 50px; }
+  .body-wrapper .identity-container {
+    margin: 20px;
+    text-align: center;
+    display: inline-block; }
